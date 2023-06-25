@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { store } from '../store'
-import { setApiData } from '../store/modules/auth/reducer'
+import Cookie from 'js-cookie';
+import ApiData from '../dtos/ApiData';
 
 const api = axios.create({
   baseURL: 'http://localhost:3000'
@@ -8,7 +8,7 @@ const api = axios.create({
 
 api.interceptors.response.use(res => {
   if(res.headers['access-token']) {
-    const apiData = {
+    const apiData: ApiData = {
       'access-token': res.headers['access-token'],
       client: res.headers.client,
       expiry: res.headers.expiry,
@@ -16,7 +16,8 @@ api.interceptors.response.use(res => {
       uid: res.headers.uid
     };
 
-    store.dispatch({type: setApiData.type, payload: apiData});
+    api.defaults.headers = apiData;
+    Cookie.set('@api-data', apiData);
   }
 
   return res;
@@ -24,9 +25,10 @@ api.interceptors.response.use(res => {
 
 api.interceptors.request.use(req => {
   if(req.url.includes('admin')) {
-    api.defaults.headers = store.getState().auth.apiData;
+    const apiData: ApiData = JSON.parse(Cookie.get('@api-data'));
+    req.headers = apiData;
   }
-  
+
   return req;
 })
 
