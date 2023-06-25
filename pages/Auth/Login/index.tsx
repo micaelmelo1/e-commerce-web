@@ -6,7 +6,11 @@ const Login: React.FC = () => {
   return (
     <div>
       <MainComponent>
-        <LoginForm titlePhrase="Acessar conta" buttonPhrase="ENTRAR" />
+        <div className="p-4 text-center">
+          <h2>Entrar</h2>
+
+          <LoginForm titlePhrase="Acessar conta" buttonPhrase="ACESSAR" />
+        </div>
       </MainComponent>
     </div>
   )
