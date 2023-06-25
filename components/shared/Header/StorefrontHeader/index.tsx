@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faShoppingCart, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../../Logo';
 
-const StorefrontHeader: React.FC = () => {
+const CustomerHeader: React.FC = () => {
   return (
     <Row className={styles.background}>
       <Col md={8} className="mt-2">
@@ -41,4 +41,4 @@ const StorefrontHeader: React.FC = () => {
   )
 }
 
-export default StorefrontHeader;
+export default CustomerHeader;
