@@ -76,7 +76,7 @@ const StorefrontFooter: React.FC = () => {
           </Col>
 
           <Col lg={{span: 2, offset: 1}} xs={{span: 6, offset: 3}}>
-            <Image src="/assets/logo-bootcamp.png" alt="Logo Footer" width={240} height={70} />
+            <Image src="/assets/logo.svg" alt="Logo Footer" width={240} height={70} />
           </Col>
         </Row>
       </Col>

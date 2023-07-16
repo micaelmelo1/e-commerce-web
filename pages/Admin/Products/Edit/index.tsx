@@ -15,7 +15,7 @@ const Edit: React.FC = () => {
       <div className={styles.admin_panel}>
         <Row>
           <Col lg={4}>
-            <Image src="/assets/logo-bootcamp.png" alt="Logo Bootcamp" width={240} height={70} />
+            <Image src="/assets/logo.svg" alt="Logo Bootcamp" width={240} height={70} />
 
             <div className={styles.details_button}>
               <StyledButton icon={faArrowUp} action={"Atualizar"} type_button="blue" />

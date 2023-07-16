@@ -15,7 +15,7 @@ const Details: React.FC = () => {
       <div className={styles.admin_panel}>
         <Row style={{'textAlign': 'left'}}>
           <Col lg={4}>
-            <Image src="/assets/logo-bootcamp.png" alt="Logo Bootcamp" width={240} height={70} />
+            <Image src="/assets/logo.svg" alt="Logo Bootcamp" width={240} height={70} />
           </Col>
 
           <Col lg={8}>
