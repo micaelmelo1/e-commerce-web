@@ -7,7 +7,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import StyledButton from '../../StyledButton';
 
 interface SearchAndIcon {
-    icon: IconProp
+  icon: IconProp
 }
 
 const SearchAndIcon: React.FC<SearchAndIcon> = ({icon}) => {
