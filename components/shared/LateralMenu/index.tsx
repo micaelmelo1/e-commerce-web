@@ -35,7 +35,7 @@ const LateralMenu: React.FC = () => {
           </a>
         </Link>
 
-        <Link href="/Admin/Category/List">
+        <Link href="/Admin/Categories/List">
           <a>
             <FontAwesomeIcon icon={faCheckSquare} color="var(--color-gray-light)" className="mr-3" />
             Categorias
