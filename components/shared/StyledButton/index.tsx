@@ -10,9 +10,12 @@ interface ButtonProps {
   type_button: string
 }
 
-const StyledButton: React.FC<ButtonProps> = ({icon, action, type_button}) => {
+const StyledButton: React.FC<ButtonProps> = ({icon, action, type_button, ...rest}) => {
   return (
-    <Button className={(type_button == "red") ? styles.red_button : styles.blue_button}>
+    <Button 
+      className={(type_button == "red") ? styles.red_button : styles.blue_button}
+        {...rest}
+    >
       { icon && <FontAwesomeIcon icon={icon} className={action && "mr-2"} /> } {action}
     </Button>
   )
