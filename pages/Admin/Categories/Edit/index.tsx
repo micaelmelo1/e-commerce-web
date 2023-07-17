@@ -1,29 +1,43 @@
-import React from 'react';
 import AdminComponent from '../../../../components/shared/AdminComponent';
 import TitleAdminPanel from '../../../../components/shared/TitleAdminPanel';
-import { Form } from 'react-bootstrap';
-import { faUser, faTimes } from '@fortawesome/free-solid-svg-icons';
-import styles from '../../../../styles/AdminPanel.module.css';
-import StyledButton from '../../../../components/shared/StyledButton';
+import Category from '../../../../dtos/Category';
+
+import withAuthAdmin from '../../../../components/withAuthAdmin';
+
+import { useDispatch } from 'react-redux';
+import { clearCategoryToEdit } from '../../../../store/modules/admin/category/reducer';
+
+import CategoriesService from '../../../../services/categories';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+
+import CategoryForm from '../../../../components/Admin/CategoryForm';
 
 const Edit: React.FC = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleSubmit = async (category: Category): Promise<void> => {
+    try {
+      await CategoriesService.update(category);
+
+      toast.info('Categoria atualizada com sucesso!');
+
+      dispatch(clearCategoryToEdit());
+      router.back();
+    } catch (err) {
+      toast.error('Ocorreu um erro ao atualizar a categoria, tente novamente.');
+      console.log(err);
+    }
+  }
+
   return (
     <AdminComponent>
-      <TitleAdminPanel title="Editar Categoria" path="Dashboard > Categorias > Detalhes da categoria > Editar categoria" />
+      <TitleAdminPanel title="Editar Categoria" path="Dashboard > Categorias > Detalhes da categoria" />
 
-      <div className={styles.admin_panel}>
-        <Form className={styles.new_form}>
-          <Form.Label>Nome</Form.Label>
-          <Form.Control type="text" placeholder="Digite seu Nome" className={styles.secundary_input} />
-        </Form>
-
-        <div className={styles.details_button}>
-          <StyledButton icon={faUser} action={"Atualizar"} type_button="blue" />
-          <StyledButton icon={faTimes} action={"Cancelar"} type_button="red" />
-        </div>
-      </div>
+      <CategoryForm handleSubmit={handleSubmit} action="Atualizar" />
     </AdminComponent>
   )
 }
 
-export default Edit;
+  export default withAuthAdmin(Edit);
