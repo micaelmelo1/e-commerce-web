@@ -1,26 +1,36 @@
 import React from 'react';
 import styles from '../../../styles/MenuLateral.module.css';
 import Logo from '../Logo';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignal, faUser, faGamepad, faCheckSquare, faLaptop, faTicketAlt, faDollarSign, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
+
+import { useRouter } from 'next/router';
+
+import SignOutService from '../../../util/SignOutService';
 
 const LateralMenu: React.FC = () => {
-  return(
+  const router = useRouter();
+
+  return (
     <div className={styles.background}>
       <Logo />
 
       <div className={styles.list}>
-      <Link href="/Admin">
-          <a>
-            <FontAwesomeIcon icon={faSignal} color="var(--color-gray-light)" className="mr-3" />
+        <Link href="/Admin">
+          <a className={`${router.pathname === '/Admin' ? styles.active : ''}`}>
+            <FontAwesomeIcon 
+              icon={faSignal} 
+              color="var(--color-gray-light)" 
+              className="mr-3" 
+            />
             Painel Inicial
             <hr />
           </a>
         </Link>
 
         <Link href="/Admin/Users/List">
-          <a>
+          <a className={`${router.pathname === '/Admin/Users/List' ? styles.active : ''}`}>
             <FontAwesomeIcon icon={faUser} color="var(--color-gray-light)" className="mr-3" />
             Usuários
             <hr />
@@ -28,7 +38,7 @@ const LateralMenu: React.FC = () => {
         </Link>
 
         <Link href="/Admin/Products/List">
-          <a>
+          <a className={`${router.pathname === '/Admin/Products/List' ? styles.active : ''}`}>
             <FontAwesomeIcon icon={faGamepad} color="var(--color-gray-light)" className="mr-3" />
             Produtos
             <hr />
@@ -36,7 +46,7 @@ const LateralMenu: React.FC = () => {
         </Link>
 
         <Link href="/Admin/Categories/List">
-          <a>
+          <a className={`${router.pathname === '/Admin/Categories/List' ? styles.active : ''}`}>
             <FontAwesomeIcon icon={faCheckSquare} color="var(--color-gray-light)" className="mr-3" />
             Categorias
             <hr />
@@ -44,7 +54,7 @@ const LateralMenu: React.FC = () => {
         </Link>
 
         <Link href="/Admin/SystemRequirements/List">
-          <a>
+          <a className={`${router.pathname === '/Admin/SystemRequirements/List' ? styles.active : ''}`}>
             <FontAwesomeIcon icon={faLaptop} color="var(--color-gray-light)" className="mr-3" />
               Requisitos do sistema
               <hr />
@@ -52,23 +62,23 @@ const LateralMenu: React.FC = () => {
         </Link>
 
         <Link href="/Admin/Coupons/List">
-          <a>
+          <a className={`${router.pathname === '/Admin/Coupons/List' ? styles.active : ''}`}>
             <FontAwesomeIcon icon={faTicketAlt} color="var(--color-gray-light)" className="mr-3" />
             Cupons
             <hr />
           </a>
         </Link>
 
-        <Link href="/Admin/#">
-          <a>
+        <Link href="/Admin/Orders/List">
+          <a className={`${router.pathname === '/Admin/Orders/List' ? styles.active : ''}`}>
             <FontAwesomeIcon icon={faDollarSign} color="var(--color-gray-light)" className="mr-3" />
             Financeiro
             <hr />
           </a>
         </Link>
 
-        <Link href="/Admin/#">
-          <a>
+        <Link href="/Auth/Login">
+          <a onClick={SignOutService.execute}>
             <FontAwesomeIcon icon={faSignOutAlt} color="var(--color-gray-light)" className="mr-3" />
             Sair
             <hr />
