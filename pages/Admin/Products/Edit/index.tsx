@@ -1,72 +1,44 @@
-import React from 'react';
 import AdminComponent from '../../../../components/shared/AdminComponent';
 import TitleAdminPanel from '../../../../components/shared/TitleAdminPanel';
-import { Form, Col, Row } from 'react-bootstrap';
-import { faTimes, faArrowUp, faTrash, faGamepad } from '@fortawesome/free-solid-svg-icons';
-import styles from '../../../../styles/AdminPanel.module.css';
-import StyledButton from '../../../../components/shared/StyledButton';
-import Image from 'next/image';
+
+import withAuthAdmin from '../../../../components/withAuthAdmin';
+
+import ProductForm from '../../../../components/Admin/ProductForm';
+import ProductsService from '../../../../services/products';
+
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+
+import { useDispatch } from 'react-redux';
+import { clearProductToEdit } from '../../../../store/modules/admin/product/reducer';
+
 
 const Edit: React.FC = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (product: FormData): Promise<void> => {
+    try {
+      await ProductsService.update(product);
+
+      toast.info('Produto atualizado com sucesso!');
+      
+      // limpando o produto para edição do redux
+      dispatch(clearProductToEdit());
+      router.back();
+    } catch (err) {
+      toast.error('Ocorreu um erro ao atualizar o produto, tente novamente.');
+      console.log(err);
+    }
+  }
+
   return (
     <AdminComponent>
       <TitleAdminPanel title="Editar Produto" path="Dashboard > Produtos > Detalhes do produto > Editar produto" />
 
-      <div className={styles.admin_panel}>
-        <Row>
-          <Col lg={4}>
-            <Image src="/assets/logo.svg" alt="Logo Bootcamp" width={240} height={70} />
-
-            <div className={styles.details_button}>
-              <StyledButton icon={faArrowUp} action={"Atualizar"} type_button="blue" />
-              <StyledButton icon={faTrash} action={"Excluir"} type_button="red" />
-            </div>
-          </Col>
-
-          <Col lg={8}>
-            <Form className={styles.new_form}>
-              <Form.Row>
-                <Form.Group as={Col} className="p-4">
-                  <Form.Label>Nome</Form.Label>
-                  <Form.Control type="text" placeholder="Digite o Nome" className={styles.secundary_input} />
-                </Form.Group>
-
-                <Form.Group as={Col} className="p-4">
-                  <Form.Label>Código</Form.Label>
-                  <Form.Control type="text" placeholder="Digite o ID" className={styles.secundary_input} />
-                </Form.Group>
-              </Form.Row>
-
-              <Form.Row>
-                <Form.Group as={Col} className="p-4">
-                  <Form.Label>Categorias</Form.Label>
-                  <Form.Control as="select" className={styles.secundary_input}>
-                    <option>Selecionar</option>
-                    <option>História</option>
-                    <option>Aventura</option>
-                    <option>Mundo aberto</option>
-                  </Form.Control>
-                </Form.Group>
-
-                <Form.Group as={Col} className="p-4">
-                  <Form.Label>Status</Form.Label>
-                  <Form.Control as="select" className={styles.secundary_input}>
-                    <option>Disponível</option>
-                    <option>Indisponível</option>
-                  </Form.Control>
-                </Form.Group>
-              </Form.Row>
-            </Form>
-          </Col>
-        </Row>
-
-        <div className={styles.details_button}>
-          <StyledButton icon={faGamepad} action={"Atualizar"} type_button="blue" />
-          <StyledButton icon={faTimes} action={"Cancelar"} type_button="red" />
-        </div>
-      </div>
+      <ProductForm action="Atualizar" handleSubmit={handleSubmit}/>
     </AdminComponent>
   )
 }
 
-export default Edit;
+export default withAuthAdmin(Edit);
