@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form, Col, Row } from 'react-bootstrap';
 import { faTimes, faGamepad } from '@fortawesome/free-solid-svg-icons';
-import styles from './styles.module.css';
+import styles from '../styles.module.css';
 import StyledButton from '../../shared/StyledButton';
 import ProductImage from './ProductImage';
 
@@ -38,6 +38,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
   const [systemRequirement, setSystemRequirement] = useState(1);
 
   const [productImage, setProductImage] = useState('');
+  const [featured, setFeatured] = useState('false');
 
   const product: Product = useSelector(state => state.product);
 
@@ -71,6 +72,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
       setPrice(product.price);
       setStatus(product.status);
 
+      setFeatured(product.featured);
+
       setProductImage(product?.image_url);
     }
   }, [product])
@@ -100,6 +103,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
     formData.append('product[status]', status);
 
     formData.append('product[productable]', 'game');
+    formData.append('product[featured]', featured);
 
     if (image) {
       formData.append('product[image]', image);
@@ -127,7 +131,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
   }
 
   return (
-    <div >
+    <div className={styles.admin_panel}>
       <Form className={styles.new_form} onSubmit={handleFormSubmit}>
         <Row>
 
@@ -237,7 +241,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
                   defaultValue={developer}
                   placeholder="Digite o nome da desenvolvedora"
                   onChange={
-                    (evt: React.ChangeEvent<HTMLInputElement>) =>
+                    (evt: React.ChangeEvent<HTMLSelectElement>) =>
                       setDeveloper(evt.target.value)
                   }
                   required
@@ -253,7 +257,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
                   type="date"
                   className={styles.secundary_input}
                   defaultValue={releaseDate}
-                  placeholder="Digite o nome da desenvolvedora"
+                  placeholder="Digite a data de lançamento"
                   onChange={
                     (evt: React.ChangeEvent<HTMLDataElement>) =>
                       setReleaseDate(evt.target.value)
@@ -291,12 +295,28 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
               </Form.Group>
             </Form.Row>
 
-            <Form.Row>              
-              <Form.Group as={Col} md={6} sm={12} className="p-2">
+            <Form.Row> 
+              <Form.Group as={Col} md={4} sm={12} className="p-2">
+                <Form.Label>Em Destaque</Form.Label>
+                <Form.Control
+                  as="select"
+                  className={styles.secundary_input}
+                  value={featured}
+                  onChange={
+                      (evt: React.ChangeEvent<HTMLSelectElement>) => 
+                        setFeatured(evt.target.value)
+                    }
+                  >
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group as={Col} md={4} sm={12} className="p-2">
                 <Form.Label>Preço</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Digite o ID"
+                  placeholder="Digite o preço"
                   className={styles.secundary_input}
                   value={price}
                   onChange={
@@ -307,7 +327,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
                 />
               </Form.Group>
 
-              <Form.Group as={Col} md={6} sm={12} className="p-2">
+              <Form.Group as={Col} md={4} sm={12} className="p-2">
                 <Form.Label>Status</Form.Label>
                 <Form.Control
                   as="select"
@@ -328,7 +348,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
           </Col>
         </Row>
 
-        <div>
+        <div className={styles.details_button}>
           <StyledButton
             icon={faGamepad}
             action={action}
