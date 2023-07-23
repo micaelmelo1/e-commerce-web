@@ -72,7 +72,7 @@ const Dashboard: React.FC = () => {
 
       <DashboardSummary />
 
-      <Row className="mt-4 mb-2">
+      {/* <Row className="mt-4 mb-2">
         <Col md="7" xs="12" className="mb-3">
           <DashboardGraphic />
         </Col>
@@ -80,7 +80,7 @@ const Dashboard: React.FC = () => {
         <Col md="5" xs="12" className="mb-3">
           <DashboardTopProducts/>
         </Col>
-      </Row>
+      </Row> */}
     </>
   )
 }
