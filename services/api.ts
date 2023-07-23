@@ -7,6 +7,7 @@ import ApiResponseError from '../dtos/ApiResponseError';
 import Router from 'next/router';
 import { toast } from 'react-toastify';
 
+
 const api = axios.create({
   baseURL: 'http://localhost:3000'
 });
@@ -64,9 +65,20 @@ api.interceptors.response.use(res => {
 });
 
 api.interceptors.request.use(req => {
-  if(req.url.includes('admin')) {
-    const apiData: ApiData = JSON.parse(Cookie.get('@api-data'));
-    req.headers = apiData;
+  req.headers = { ContentType: 'application/json' };
+
+  if (
+    req.url.includes('admin') ||
+    req.url.includes('auth/v1/user')
+  ) {
+    const apiDataCookie = Cookie.get('@api-data');
+
+    if (!apiDataCookie) {
+      return req;
+    }
+
+    const apiData: ApiData = JSON.parse(apiDataCookie);
+    req.headers = { ...apiData, ...req.headers };
   }
 
   return req;

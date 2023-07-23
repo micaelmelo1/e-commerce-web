@@ -1,14 +1,15 @@
 import React from 'react';
-import withAuthAdmin from '../../components/withAuthAdmin';
 import AdminComponent from '../../components/shared/AdminComponent';
+import withAuthAdmin from '../../components/withAuthAdmin';
+
+import Dashboard from '../../components/Admin/Dashboard';
 
 const Home: React.FC = () => {
-
-  return( 
+    return (
     <AdminComponent>
-      <h1>Parabéns, você acessou o painel! \o/</h1>
+        <Dashboard/>
     </AdminComponent>
-  )
+    )
 }
 
 export default withAuthAdmin(Home);
