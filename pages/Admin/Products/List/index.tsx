@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faGamepad } from '@fortawesome/free-solid-svg-icons';
 import AdminListTable from '../../../../components/shared/AdminListTable';
 import AdminDeleteModal from '../../../../components/shared/AdminDeleteModal';
-import styles from '../../../../styles/AdminPanel.module.css';
 
 import withAuthAdmin from '../../../../components/withAuthAdmin';
 
@@ -94,7 +93,7 @@ const List: React.FC = () => {
           >
             {
               data.products.map(product => (
-                <tr className={styles.table_line} key={product.id}>
+                <tr key={product.id}>
                   <td>{product.name}</td>
                   <td>
                     { 
@@ -110,29 +109,29 @@ const List: React.FC = () => {
                   </td>
                   <td>
                     {`#${product.id}`}
-                    </td>
+                  </td>
                   <td>
                     {product.status === 'available' ? 'Disponível' : 'Indisponível'}
                   </td>
                   <td>
-                    <div className={styles.hover}>
+                    <div>
                       <FontAwesomeIcon 
                         icon={faEdit} 
                         onClick={() => handleEdit(product)}
                       />
                     </div>
-                    </td>
+                  </td>
                   <td>
-                    <div className={styles.hover}>
+                    <div>
                       <FontAwesomeIcon 
                         icon={faTrash} 
                         onClick={() => handleShow(product.id)} />
                     </div>
-                    </td>
-                    </tr> 
+                  </td>
+                </tr> 
               ))
             }
-            </AdminListTable>
+          </AdminListTable>
         ) : (
           <NoData />
         )

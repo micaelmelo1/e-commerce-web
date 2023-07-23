@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form, Col, Row } from 'react-bootstrap';
 import { faTimes, faGamepad } from '@fortawesome/free-solid-svg-icons';
-import styles from '../../../styles/AdminPanel.module.css';
+import styles from './styles.module.css';
 import StyledButton from '../../shared/StyledButton';
 import ProductImage from './ProductImage';
 
@@ -127,7 +127,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
   }
 
   return (
-    <div className={styles.admin_panel}>
+    <div >
       <Form className={styles.new_form} onSubmit={handleFormSubmit}>
         <Row>
 
@@ -328,7 +328,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ handleSubmit, action = 'Adici
           </Col>
         </Row>
 
-        <div className={styles.details_button}>
+        <div>
           <StyledButton
             icon={faGamepad}
             action={action}
