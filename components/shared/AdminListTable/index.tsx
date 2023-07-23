@@ -1,7 +1,6 @@
 import React from 'react';
-import styles from '../../../styles/AdminPanel.module.css';
+import styles from './styles.module.css';
 import { Table } from 'react-bootstrap';
-import StyledButton from '../StyledButton';
 import Pagination from '../Pagination';
 import Meta from '../../../dtos/Meta';
 
