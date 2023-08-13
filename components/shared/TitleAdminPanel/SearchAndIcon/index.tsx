@@ -20,6 +20,7 @@ interface SearchAndIcon {
 
 const SearchAndIcon: React.FC<SearchAndIcon> = ({icon, newPath}) => {
   const [ search, setSearch ] = useState('');
+  const [ placeholder, setPlaceholder ] = useState('');
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -27,6 +28,32 @@ const SearchAndIcon: React.FC<SearchAndIcon> = ({icon, newPath}) => {
     dispatch(clearSearch());
   }, []);
 
+  useEffect(() => {
+    switch(router.pathname) {
+      case '/Admin/Products/List':
+        setPlaceholder('Pesquisar produto');
+        break;
+      case '/Admin/Users/List':
+        setPlaceholder('Pesquisar usuário');
+        break;
+      case '/Admin/Categories/List':
+        setPlaceholder('Pesquisar categoria');
+        break;
+      case '/Admin/SystemRequirements/List':
+        setPlaceholder('Pesquisar requisito');
+        break;
+      case '/Admin/Coupons/List':
+        setPlaceholder('Pesquisar cupom');
+        break;
+      case '/Admin/Orders/List':
+        setPlaceholder('Pesquisar pedido');
+        break;
+      default:
+        setPlaceholder('Pesquisar');
+        break;
+    }
+
+  }, [router.pathname]);
   const handleSearch = (): void => {
     router.replace(router.pathname, '?page=1');
     dispatch(setSearchRedux(search));
@@ -39,7 +66,7 @@ const SearchAndIcon: React.FC<SearchAndIcon> = ({icon, newPath}) => {
           <Col lg={9} xs={10}>
             <InputGroup>
               <FormControl 
-                placeholder="Pesquisar usuário" 
+                placeholder={placeholder}
                 className={styles.input} 
                 value={search}
                 onChange={

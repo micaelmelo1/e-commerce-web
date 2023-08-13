@@ -12,7 +12,8 @@ const withAuthAdmin = (Component) => {
     const loggedUser: User = useSelector((state: AuthState) => state.auth.loggedUser);
     
     //TODO if cookie don't exists redirect to login
-    const apiData: ApiData = JSON.parse(Cookie.get('@api-data'));
+    const apiDataString = Cookie.get('@api-data');
+    const apiData: ApiData = apiDataString ? JSON.parse(apiDataString) : null;
 
     // checando se o usuário existe no redux e se o mesmo é admin
     // checando se os dados da api existem no cookie e ainda se existe
